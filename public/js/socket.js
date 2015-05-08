@@ -96,10 +96,10 @@ function updateEnemyLocation(enemy, data) {
   }
 }
 
-function enemyManagement(enemyFunc, data) {
+function enemyManagement(enemyMngFunc, data) {
   for(i = 0; i < player.enemies.length; i++) {
     var enemy = player.enemies[i];
-    enemyFunc(enemy, data);
+    enemyMngFunc(enemy, data);
   }
 }
 // ============================================

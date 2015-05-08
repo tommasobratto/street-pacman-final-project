@@ -23,7 +23,7 @@ function updatePlayerLocation(position) {
   }
 
   if(player.status == 'invincible') {
-    eatsWeak(player);
+    enemyManagement(eatEnemyChance);
   }
 
   broadcastPlayerMovement(player);
