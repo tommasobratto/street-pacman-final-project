@@ -134,11 +134,11 @@ function isPwned(data) {
     window.location.replace('/lost');
   } else {
     enemyManagement(removeEnemy, data);
-    youWin(data);
+    youWin();
   }
 }
 
-function youWin(data) {
+function youWin() {
   if(player.tag == 'Pacman') {
     if(player.fallenEnemies.length == 4) {
       window.location.replace('/won');

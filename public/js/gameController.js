@@ -1,4 +1,3 @@
-var player = new Player();
 var pellets = [];
 
 var megaPellet1 = new Pellet();

@@ -1,4 +1,3 @@
-
 function calculateDistance(obj) {
   var from = new google.maps.LatLng(player.coordinates.latitude, player.coordinates.longitude);
   var to = new google.maps.LatLng(obj.coordinates.latitude, obj.coordinates.longitude);
@@ -42,19 +41,6 @@ function eatsWeak(player) {
     }
   }
 }
-
-function removePelletMarker(marker, pellet) {
-  if(marker.title == pellet.id) {
-    map.removeMarker(marker);
-  }
-};
-
-function removeEnemyMarker(marker, enemy) {
-  if(marker.title == enemy.id) {
-    map.removeMarker(marker);
-    broadcastPwnMsg(enemy);
-  }
-};
 
 function mortal(player) {
   setTimeout(function() {

@@ -27,3 +27,17 @@ function matchObjectToMarker(removeObjectMarker, object) {
     removeObjectMarker(marker, object);
   }
 }
+
+function removePelletMarker(marker, pellet) {
+  if(marker.title == pellet.id) {
+    map.removeMarker(marker);
+  }
+};
+
+function removeEnemyMarker(marker, enemy) {
+  if(marker.title == enemy.id) {
+    map.removeMarker(marker);
+    broadcastPwnMsg(enemy);
+  }
+};
+

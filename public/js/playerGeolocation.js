@@ -26,8 +26,6 @@ function updatePlayerLocation(position) {
 
   broadcastPlayerMovement(player);
   map.setCenter(coords.latitude, coords.longitude);
-  // console.log(player.coordinates);
-  // console.log(map.markers);
 }
 
 function errorCallback() {

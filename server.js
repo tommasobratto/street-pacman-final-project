@@ -38,7 +38,7 @@ function start() {
   io.on('connection', function(socket) {
     if(socket.id != undefined && players.count < 5) {
       players.push(socket.id);
-      console.log(players);
+      console.log("players currently connected " + players);
     }
 
     console.log('user ' + socket.id + ' connected');
