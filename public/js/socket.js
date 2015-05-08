@@ -2,10 +2,6 @@
 // methods preceded by "listenFor" or "broadcast" in other files are strictly socket.io methods
 var socket = io();
 
-socket.on('server full', function(data) {
-  console.log(data.answer);
-});
-
 socket.on('connect', function() {
   player.id = socket.id;
 });
@@ -21,20 +17,13 @@ function broadcastPlayerMovement(player) {
   });
 }
 
-function broadcast1337() {
+function broadcastPacmanInvincibility() {
   $('.invincible').show();
-  socket.emit('1337', { id: player.id });
+  socket.emit('pacman eats pellet', { id: player.id });
 }
 
 function broadcastPwnMsg(enemy) {
   socket.emit('pwned', { id: enemy.id });
-}
-
-function listenForPwning() {
-  socket.on('player pwned', function(data) {
-    console.log('pwning in progress...');
-    isPwned(data);
-  });
 }
 
 function listenForEnemyLocation() {
@@ -53,10 +42,15 @@ function listenForEnemyEscape() {
   });
 }
 
-function listenFor1337() {
-  socket.on('player 1337', function(data) {
+function listenForPwning() {
+  socket.on('player pwned', function(data) {
+    isPwned(data);
+  });
+}
+
+function listenForInvinciblePacman() {
+  socket.on('pacman is invincible', function(data) {
     changePlayerStatus(player);
-    // setTimeout(changePlayerStatus(player), 60000);
   });
 }
 
@@ -80,11 +74,6 @@ function checkForEnemyRedundancy(data) {
   }
 }
 
-function checkForDuplicateMarker(marker) {
-  if(marker.title == undefined ) {
-    map.removeMarker(marker);
-  }
-}
 // =======================================
 
 
@@ -117,15 +106,8 @@ function enemyManagement(enemyFunc, data) {
 
 
 
-// player status changing functions
-// ================================
-function changePlayerStatus(player) {
-  if(player.status == 'weak') {
-    player.status = 'invincible';
-  } else {
-    player.status = 'weak';
-  }
-}
+// player UI functions
+// =====================================
 
 function isPwned(data) {
   if(data.id == player.id) {

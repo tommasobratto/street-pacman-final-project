@@ -59,8 +59,8 @@ function start() {
       console.log(data.id + ' pwned');
     });
 
-    socket.on('1337', function(data) {
-      socket.broadcast.emit('player 1337', data);
+    socket.on('pacman eats pellet', function(data) {
+      socket.broadcast.emit('pacman is invincible', data);
     });
   });
 

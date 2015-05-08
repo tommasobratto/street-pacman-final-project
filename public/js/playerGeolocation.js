@@ -14,7 +14,9 @@ function updatePlayerLocation(position) {
   // Main player game loop
   setPlayerCoords(position);
   updateMarkerPosition(player);
-  matchObjectToMarker(checkForDuplicateMarker);
+  // The function below works to remove some occasional marker duplicates left by a bug,
+  // as a substitute for the previous, redundant checkForMarkerDuplicate()
+  removeCustomMarker();
 
   if(player.tag == 'Pacman') {
     eatPelletChance(player);

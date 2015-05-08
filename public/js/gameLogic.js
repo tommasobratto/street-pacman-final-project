@@ -15,7 +15,7 @@ function eatPelletChance(player) {
   for(i = 0; i < pellets.length; i++) {
   var pellet = pellets[i];
   var pelletDist = calculateDistance(pellet);
-    if(pelletDist < 6) {
+    if(pelletDist < 100) {
       var i = pellets.indexOf(pellet);
       pellets.splice(i, 1);
 
@@ -23,9 +23,9 @@ function eatPelletChance(player) {
         changePlayerStatus(player);
       }
 
-      matchObjectToMarker(removePelletMarker, pellet);
-      broadcast1337();
-      mortal(player);
+      removeCustomMarker(pellet);
+      broadcastPacmanInvincibility();
+      mortalCountdownSwitch(player);
     }
   }
 }
@@ -37,14 +37,23 @@ function eatsWeak(player) {
     if (enemyDist < 10 && enemy.status == 'weak') {
       player.fallenEnemies.push(enemy);
       player.enemies.splice(i, 1);
-      matchObjectToMarker(removeEnemyMarker, enemy);
+      removeCustomMarker(enemy);
+      broadcastPwnMsg(enemy);
     }
   }
 }
 
-function mortal(player) {
+function mortalCountdownSwitch(player) {
   setTimeout(function() {
     changePlayerStatus(player);
     $('.invincible').hide();
  }, 60000);
+}
+
+function changePlayerStatus(player) {
+  if(player.status == 'weak') {
+    player.status = 'invincible';
+  } else {
+    player.status = 'weak';
+  }
 }

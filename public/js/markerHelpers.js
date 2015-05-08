@@ -1,8 +1,15 @@
 function removeCustomMarker(object) {
   for(i = 0; i < map.markers.length; i++) {
     var marker = map.markers[i];
-    if(marker.title == object.id) {
-      map.removeMarker(marker);
+    
+    if(object) {
+      if(marker.title == object.id) {
+        map.removeMarker(marker);
+      }
+    } else {
+      if(marker.title == undefined) {
+        map.removeMarker(marker);
+      } 
     }
   }
 }
@@ -20,24 +27,3 @@ function updateMarkerPosition(player) {
   removeCustomMarker(player);
   addCustomMarker(player);
 }
-
-function matchObjectToMarker(removeObjectMarker, object) {
-  for(i = 0; i < map.markers.length; i++) {
-    var marker = map.markers[i];
-    removeObjectMarker(marker, object);
-  }
-}
-
-function removePelletMarker(marker, pellet) {
-  if(marker.title == pellet.id) {
-    map.removeMarker(marker);
-  }
-};
-
-function removeEnemyMarker(marker, enemy) {
-  if(marker.title == enemy.id) {
-    map.removeMarker(marker);
-    broadcastPwnMsg(enemy);
-  }
-};
-

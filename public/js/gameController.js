@@ -16,7 +16,7 @@ $(document).ready(function() {
   listenForEnemyLocation();
   listenForEnemyEscape();
   listenForPwning();
-  listenFor1337();
+  listenForInvinciblePacman();
   queryGPStracker();
   geolocQueryLoop;
 });
