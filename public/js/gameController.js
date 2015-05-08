@@ -1,3 +1,4 @@
+// Initialising game state
 var pellets = [];
 
 var megaPellet1 = new Pellet();

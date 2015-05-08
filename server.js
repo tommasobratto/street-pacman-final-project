@@ -55,7 +55,7 @@ function start() {
     });
 
     socket.on('pwned', function(data) {
-      io.sockets.emit('player pwned', { id: data.id });
+      io.sockets.emit('player pwned', { id: data.id, icon: data.icon });
       console.log(data.id + ' pwned');
     });
 

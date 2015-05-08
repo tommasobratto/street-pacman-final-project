@@ -23,7 +23,7 @@ function broadcastPacmanInvincibility() {
 }
 
 function broadcastPwnMsg(enemy) {
-  socket.emit('pwned', { id: enemy.id });
+  socket.emit('pwned', { id: enemy.id, icon: enemy.icon });
 }
 
 function listenForEnemyLocation() {
@@ -45,7 +45,7 @@ function listenForEnemyEscape() {
 function listenForPwning() {
   socket.on('player pwned', function(data) {
     isPwned(data);
-  });
+   });
 }
 
 function listenForInvinciblePacman() {
@@ -116,17 +116,19 @@ function isPwned(data) {
     window.location.replace('/lost');
   } else {
     enemyManagement(removeEnemy, data);
-    youWin();
+    youWin(data);
   }
 }
 
-function youWin() {
+function youWin(data) {
   if(player.tag == 'Pacman') {
     if(player.fallenEnemies.length == 4) {
       window.location.replace('/won');
     }
   } else {
-    window.location.replace('/won');
+    if(data.icon == "/images/mini_Pacman.png") {
+      window.location.replace('/won');
+    }
   }
 }
 // =======================================
