@@ -1,4 +1,4 @@
-// this file contains Socket.io client functions,
+// This file contains Socket.io client functions,
 // methods preceded by "listenFor" or "broadcast" in other files are strictly socket.io methods
 var socket = io();
 
@@ -9,6 +9,26 @@ socket.on('server full', function(data) {
 socket.on('connect', function() {
   player.id = socket.id;
 });
+
+function broadcastPlayerMovement(player) {
+  // this function is called in the playerGeolocation.js file,
+  // every time a GPS tracker query is sent
+  socket.emit('player moves', {
+    id: socket.id,
+    coordinates: player.coordinates,
+    icon: player.icon,
+    status: player.status
+  });
+}
+
+function broadcast1337() {
+  $('.invincible').show();
+  socket.emit('1337', { id: player.id });
+}
+
+function broadcastPwnMsg(enemy) {
+  socket.emit('pwned', { id: enemy.id });
+}
 
 function listenForPwning() {
   socket.on('player pwned', function(data) {
@@ -22,80 +42,26 @@ function listenForEnemyLocation() {
     checkForEnemyRedundancy(data);
     checkForUndefId();
     if(contains(player.fallenEnemies, data) == false && contains(player.enemies, data) == true) {
-      updateEnemyLocation(data);
+      enemyManagement(updateEnemyLocation, data);
     }
   });
 }
 
 function listenForEnemyEscape() {
   socket.on('player disconnected', function(data) {
-    removeEnemy(data);
+    enemyManagement(removeEnemy, data);
   });
-}
-
-function removeEnemy(data) {
-  for(i = 0; i < player.enemies.length; i++) {
-    var enemy = player.enemies[i];
-    if(enemy.id == data.id) {
-      player.enemies.splice(i, 1);
-      removeCustomMarker(enemy);
-    }
-  }
-}
-
-function updateEnemyLocation(data) {
-  for(i = 0; i < player.enemies.length; i++) {
-    var enemy = player.enemies[i];
-    if(enemy.id == data.id) {
-      enemy.coordinates = data.coordinates;
-      enemy.icon = data.icon;
-      updateMarkerPosition(enemy);
-    }
-  }
-}
-
-function broadcastPlayerMovement(player) {
-  // this function is called in the playerGeolocation.js file,
-  // every time a GPS tracker query is sent
-  socket.emit('player moves', {
-    id: socket.id,
-    coordinates: player.coordinates,
-    icon: player.icon,
-    status: player.status
-  });
-}
-
-function broadcastPwnMsg(enemy) {
-  socket.emit('pwned', { id: enemy.id });
-}
-
-function changePlayerStatus(player) {
-  if(player.status == 'weak') {
-    player.status = 'invincible';
-  } else {
-    player.status = 'weak';
-  }
 }
 
 function listenFor1337() {
   socket.on('player 1337', function(data) {
     changePlayerStatus(player);
-    console.log(player.status);
     // setTimeout(changePlayerStatus(player), 60000);
   });
 }
 
-function isPwned(data) {
-  if(data.id == player.id) {
-    clearInterval(geolocQueryLoop);
-    removeCustomMarker(player);
-    window.location.replace('/lost');
-  } else {
-    removeEnemy(data);
-    youWin(data);
-  }
-}
-
+// Methods listed as "checkFor" are client data management functions
+// =================================================================
 function checkForUndefId() {
   for(i = 0; i < player.enemies.length; i++) {
     var enemy = player.enemies[i];
@@ -114,33 +80,62 @@ function checkForEnemyRedundancy(data) {
   }
 }
 
-function contains(array, obj) {
-  var i = array.length;
-  while (i--) {
-    if (array[i].id == obj.id) {
-      return true;
-    }
+function checkForDuplicateMarker(marker) {
+  if(marker.title == undefined ) {
+    map.removeMarker(marker);
   }
-  return false;
 }
+// =======================================
 
-function broadcastPlayerChosen(iconName) {
-  socket.emit('hide character icon', { icon: iconName });
-}
 
-function checkForDuplicateMarker() {
-  for(i = 0; i < map.markers.length; i++) {
-    var marker = map.markers[i];
-    if(marker.title == undefined ) {
-      map.removeMarker(marker);
-    }
+
+// Enemy Management
+// ==========================================
+
+function removeEnemy(enemy, data) {
+  if(enemy.id == data.id) {
+    player.enemies.splice(i, 1);
+    removeCustomMarker(enemy);
   }
 }
 
-function listenForChosenCharacter() {
-  socket.on('hide chosen character icon', function(data) {
-    hide(data.icon);
-  });
+function updateEnemyLocation(enemy, data) {
+  if(enemy.id == data.id) {
+    enemy.coordinates = data.coordinates;
+    enemy.icon = data.icon;
+    updateMarkerPosition(enemy);
+  }
+}
+
+function enemyManagement(enemyFunc, data) {
+  for(i = 0; i < player.enemies.length; i++) {
+    var enemy = player.enemies[i];
+    enemyFunc(enemy, data);
+  }
+}
+// ============================================
+
+
+
+// player status changing functions
+// ================================
+function changePlayerStatus(player) {
+  if(player.status == 'weak') {
+    player.status = 'invincible';
+  } else {
+    player.status = 'weak';
+  }
+}
+
+function isPwned(data) {
+  if(data.id == player.id) {
+    clearInterval(geolocQueryLoop);
+    removeCustomMarker(player);
+    window.location.replace('/lost');
+  } else {
+    enemyManagement(removeEnemy, data);
+    youWin(data);
+  }
 }
 
 function youWin(data) {
@@ -151,4 +146,18 @@ function youWin(data) {
   } else {
     window.location.replace('/won');
   }
+}
+// =======================================
+
+
+
+function contains(array, obj) {
+  // thank you, random SO guy
+  var i = array.length;
+  while (i--) {
+    if (array[i].id == obj.id) {
+      return true;
+    }
+  }
+  return false;
 }

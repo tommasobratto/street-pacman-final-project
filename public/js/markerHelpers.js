@@ -20,3 +20,10 @@ function updateMarkerPosition(player) {
   removeCustomMarker(player);
   addCustomMarker(player);
 }
+
+function matchObjectToMarker(removeObjectMarker, object) {
+  for(i = 0; i < map.markers.length; i++) {
+    var marker = map.markers[i];
+    removeObjectMarker(marker, object);
+  }
+}

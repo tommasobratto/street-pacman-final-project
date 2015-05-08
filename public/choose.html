@@ -42,12 +42,10 @@
 
   <script>
   $(document).ready(function(){
-    listenForChosenCharacter();
     $('.character').on('click',function(){
       playerIcon = $(this).attr('id');
       var chooseIcon = JSON.stringify(playerIcon);
       localStorage.setItem('data', chooseIcon);
-      hide(playerIcon);
     });
   });
   </script>

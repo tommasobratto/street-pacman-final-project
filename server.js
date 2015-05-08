@@ -36,8 +36,11 @@ function start() {
 =================================== */
 
   io.on('connection', function(socket) {
-    setConnectionLimit(socket);
-    console.log(players);
+    if(socket.id != undefined && players.count < 5) {
+      players.push(socket.id);
+      console.log(players);
+    }
+
     console.log('user ' + socket.id + ' connected');
 
     socket.on('player moves', function(player) {
@@ -49,7 +52,6 @@ function start() {
       console.log('user ' + socket.id + ' disconnected');
       var i = players.indexOf(socket.id);
       players.splice(i, 1);
-      console.log(players);
     });
 
     socket.on('pwned', function(data) {
@@ -59,24 +61,8 @@ function start() {
 
     socket.on('1337', function(data) {
       socket.broadcast.emit('player 1337', data);
-      console.log(data)
-    });
-
-    socket.on('hide character icon', function(data){
-      console.log(data);
-      socket.broadcast.emit('hide chosen character icon');
     });
   });
-
-
-  function setConnectionLimit(socket) {
-    if(players.length < 5) {
-      players.push(socket.id);
-    } else {
-      io.to(socket.id).emit('server full', { answer: 'server is full' })
-      console.log('server full');
-    }
-  }
 
 // ==================================
 }

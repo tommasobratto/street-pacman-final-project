@@ -6,37 +6,46 @@ function setIcon() {
 }
 
 function getIcon(icon) {
-  var weak = 'weak';
-  var invincible = 'invincible';
 
-  if (icon == 'Pacman'){
-    player.icon = '/images/mini_Pacman.png';
-  } else if (icon == 'Shadow'){
-    player.icon = '/images/shadow-white.png';
-  } else if (icon == 'Speedy'){
-    player.icon = '/images/speedy-white.png';
-  } else if (icon == 'Bashful'){
-    player.icon = '/images/bashful-white.png';
-  } else {
-    player.icon = '/images/pokey-white.png';
+  switch(icon) {
+    case 'Pacman': {
+      player.icon = '/images/mini_Pacman.png';
+      break;
+    }
+
+    case 'Shadow': {
+      player.icon = '/images/shadow-white.png'
+      break;
+    }
+
+    case 'Speedy': {
+      player.icon = '/images/speedy-white.png'
+      break;
+    } 
+
+    case 'Bashful': {
+      player.icon = '/images/bashful-white.png'
+      break;
+    }
+
+    case 'Pokey': {
+      player.icon = '/images/pokey-white.png'
+      break;
+    }
+
+    default:
+      player.icon = undefined;
   }
 
   function initStatus(icon) {
     if(icon == 'Pacman') {
       player.tag = 'Pacman';
-      player.status = weak;
+      player.status = 'weak';
       console.log(player.status)
     } else {
       player.tag = 'Ghost';
-      player.status = invincible;
-      console.log(player.status)
+      player.status = 'invincible';
     }
   }
   initStatus(icon);
-  console.log(player.icon);
-}
-
-function hide(name){
-  document.getElementById(name).style.display='none';
-  setInterval(broadcastPlayerChosen(name), 2000);
 }

@@ -1,7 +1,3 @@
-function broadcast1337() {
-  $('.invincible').show();
-  socket.emit('1337', { id: player.id });
-}
 
 function calculateDistance(obj) {
   var from = new google.maps.LatLng(player.coordinates.latitude, player.coordinates.longitude);
@@ -23,40 +19,14 @@ function eatPelletChance(player) {
     if(pelletDist < 6) {
       var i = pellets.indexOf(pellet);
       pellets.splice(i, 1);
+
       if(player.status == 'weak') {
         changePlayerStatus(player);
       }
-      console.log(player.pelletsEaten)
-      matchPelletToMarker(pellet);
+
+      matchObjectToMarker(removePelletMarker, pellet);
       broadcast1337();
       mortal(player);
-      console.log(player.status);
-    }
-  }
-}
-
-function mortal(player) {
-  setTimeout(function() {
-    changePlayerStatus(player);
-    $('.invincible').hide();
- }, 60000);
-}
-
-function matchPelletToMarker(pellet) {
-  for(i = 0; i < map.markers.length; i++) {
-    var marker = map.markers[i];
-    if(marker.title == pellet.id) {
-      map.removeMarker(marker);
-    }
-  }
-}
-
-function matchEnemyToMarker(enemy) {
-  for(i = 0; i < map.markers.length; i++) {
-    var marker = map.markers[i];
-    if(marker.title == enemy.id) {
-      map.removeMarker(marker);
-      broadcastPwnMsg(enemy);
     }
   }
 }
@@ -68,7 +38,27 @@ function eatsWeak(player) {
     if (enemyDist < 10 && enemy.status == 'weak') {
       player.fallenEnemies.push(enemy);
       player.enemies.splice(i, 1);
-      matchEnemyToMarker(enemy);
+      matchObjectToMarker(removeEnemyMarker, enemy);
     }
   }
+}
+
+function removePelletMarker(marker, pellet) {
+  if(marker.title == pellet.id) {
+    map.removeMarker(marker);
+  }
+};
+
+function removeEnemyMarker(marker, enemy) {
+  if(marker.title == enemy.id) {
+    map.removeMarker(marker);
+    broadcastPwnMsg(enemy);
+  }
+};
+
+function mortal(player) {
+  setTimeout(function() {
+    changePlayerStatus(player);
+    $('.invincible').hide();
+ }, 60000);
 }
