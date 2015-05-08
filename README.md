@@ -3,7 +3,11 @@ Pacman.js - client-side GPS-tracking game.
 
 Note: 
 -----
-Right now, this is the most up to date branch of all the project repos. I started it mainly to see if I could refactor a bit the codebase since we had a lot of code repetition, unused code snippets, console.logs for dev. use, etc... I still need to add some much needed testing, since we had such a short time to finish the project so we had to spike a lot of stuff that we didn't knew at first. In the end, I see it more as a proof-of-concept project than anything, and I feel it is not a really good example of proper web app design (at least for some back-end parts in which I worked), but more like a very rough prototype for a mobile videogame.
+Right now, this is the most up to date branch of all the project repos. I started it mainly to see if I could refactor a bit the codebase since we had a lot of code repetition, unused code snippets, console.logs for dev. use, etc...
+
+I still need to add some much needed testing, since we had such a short time to finish the project so we had to spike a lot of stuff we didn't knew at first. 
+
+In the end, I see it more as a proof-of-concept project than anything, and I feel it is not a really good example of proper web app design (at least for some back-end parts in which I worked), but more like a very rough prototype for a mobile videogame.
 
 
 
