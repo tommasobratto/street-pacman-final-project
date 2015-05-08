@@ -7,9 +7,11 @@ Right now, this is the most up to date branch of all the project repos. I starte
 
 I still need to add some much needed testing, since we had such a short time to finish the project so we had to spike a lot of stuff we didn't knew at first. 
 
-In the end, I see it more as a proof-of-concept project than anything, and I feel it is not a really good example of proper web app design (at least for some back-end parts in which I worked), but more like a very rough prototype for a mobile videogame.
+I feel like the highlights of this project were the Socket.io implementation, done in around two days without previous experience with it, which allowed real-time updated of enemy location and game status (also read: Multiplayer!) and it practically worked as a base on which to build all the other features upon, like the addition of player interaction features like "eating" pellets and enemies and the differentiation between player "pacman" and player "ghost" interactions within the game, or the player status changing once eating the pellet which switched the game status around. 
 
+All in all, it took around 5 days to get to a decent point for the presentation. We had a lot of live testing, even if the GPS tech is not very reliable nor accurate for this kind of thing, so we had to compensate a bit for it (but not very much).
 
+In the end, I see it more as a proof-of-concept project than anything, and I feel it is not a really good example of proper web app design (at least for some back-end parts in which I worked), but more like a rough but working prototype for a mobile videogame.
 
 Instructions
 ------------
