@@ -7,7 +7,6 @@ var Player = function() {
   this.status;
   this.tag;
   this.icon;
-  this.score = 0;
   this.enemies = [];
   this.fallenEnemies = [];
 };

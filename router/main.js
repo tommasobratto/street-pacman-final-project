@@ -1,13 +1,8 @@
-module.exports=function(app) {
-  // app.get('/', function(req,res){
-  //   res.render('index.html')
-  // });
+module.exports = function(app) {
 
   var bodyParser = require('body-parser');
-  // var multer = require('multer');
 
   app.use(bodyParser.urlencoded({extended: true}));
-  // app.use(multer());
 
   app.route('/')
   .get(function(req,res){

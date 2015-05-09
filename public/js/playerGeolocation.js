@@ -18,6 +18,8 @@ function updatePlayerLocation(position) {
   // as a substitute for the previous, redundant checkForMarkerDuplicate()
   removeCustomMarker();
 
+  // These conditional statements call
+  // their respective game logic functions
   if(player.tag == 'Pacman') {
     eatPelletChance(player);
   }
@@ -35,7 +37,6 @@ function errorCallback() {
 }
 
 function setPlayerCoords(position) {
-  coords.latitude = position.coords.latitude;
-  coords.longitude = position.coords.longitude;
+  coords = position.coords;
   player.getLocation(coords);
 }

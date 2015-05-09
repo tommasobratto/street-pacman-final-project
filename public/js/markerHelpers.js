@@ -2,14 +2,12 @@ function removeCustomMarker(object) {
   for(i = 0; i < map.markers.length; i++) {
     var marker = map.markers[i];
     
-    if(object) {
-      if(marker.title == object.id) {
-        map.removeMarker(marker);
-      }
-    } else {
-      if(marker.title == undefined) {
-        map.removeMarker(marker);
-      } 
+    if(object 
+      && marker.title == object.id
+      || marker.title == undefined) {
+      
+      map.removeMarker(marker);
+    
     }
   }
 }

@@ -1,4 +1,7 @@
 // Initialising game state
+// Note: In the current version the pellets are set arbitrarily,
+// an ideal way would be to set them automatically
+// near the first player's geolocation
 var pellets = [];
 
 var megaPellet1 = new Pellet();

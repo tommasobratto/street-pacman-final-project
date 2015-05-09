@@ -38,14 +38,10 @@ function start() {
   io.on('connection', function(socket) {
     if(socket.id != undefined && players.count < 5) {
       players.push(socket.id);
-      console.log("players currently connected " + players);
+      console.log('players currently connected' + players);
     }
 
     console.log('user ' + socket.id + ' connected');
-
-    socket.on('player moves', function(player) {
-      socket.broadcast.emit('new player location', { id: player.id, coordinates: player.coordinates, icon: player.icon, status: player.status });
-    });
 
     socket.on('disconnect', function() {
       socket.broadcast.emit('player disconnected', { id: socket.id });
@@ -54,13 +50,17 @@ function start() {
       players.splice(i, 1);
     });
 
-    socket.on('pwned', function(data) {
-      io.sockets.emit('player pwned', { id: data.id, icon: data.icon });
+    socket.on('player moves', function(playerData) {
+      socket.broadcast.emit('new player location', playerData );
+    });
+
+    socket.on('pwned', function(playerData) {
+      io.sockets.emit('player pwned', playerData);
       console.log(data.id + ' pwned');
     });
 
-    socket.on('pacman eats pellet', function(data) {
-      socket.broadcast.emit('pacman is invincible', data);
+    socket.on('pacman eats pellet', function(playerData) {
+      socket.broadcast.emit('pacman is invincible', playerData);
     });
   });
 

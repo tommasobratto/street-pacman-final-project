@@ -1,5 +1,6 @@
 // This file contains Socket.io client functions,
-// methods preceded by "listenFor" or "broadcast" in other files are strictly socket.io methods
+// methods preceded by "listenFor" or "broadcast" 
+// in other files are strictly Socket.io methods
 var socket = io();
 
 socket.on('connect', function() {
@@ -17,21 +18,26 @@ function broadcastPlayerMovement(player) {
   });
 }
 
+function broadcastPwnMsg(enemy) {
+  socket.emit('pwned', { id: enemy.id, icon: enemy.icon });
+}
+
 function broadcastPacmanInvincibility() {
   $('.invincible').show();
   socket.emit('pacman eats pellet', { id: player.id });
 }
 
-function broadcastPwnMsg(enemy) {
-  socket.emit('pwned', { id: enemy.id, icon: enemy.icon });
-}
-
 function listenForEnemyLocation() {
   socket.on('new player location', function(data) {
+    
     checkForEnemyRedundancy(data);
-    checkForUndefId();
-    if(contains(player.fallenEnemies, data) == false && contains(player.enemies, data) == true) {
+    enemyManagement(checkForUndefId);
+
+    if(contains(player.fallenEnemies, data) == false 
+      && contains(player.enemies, data) == true) {
+
       enemyManagement(updateEnemyLocation, data);
+
     }
   });
 }
@@ -56,24 +62,25 @@ function listenForInvinciblePacman() {
 
 // Methods listed as "checkFor" are client data management functions
 // =================================================================
-function checkForUndefId() {
-  for(i = 0; i < player.enemies.length; i++) {
-    var enemy = player.enemies[i];
-    if(enemy.id == undefined) {
-      player.enemies.splice(i, 1);
-    }
-  }
-}
-
-function checkForEnemyRedundancy(data) {
-  if(contains(player.enemies, data) == false && contains(player.fallenEnemies, data) == false) {
-    player.enemies.push(data);
-  } else {
-    var i = player.enemies.indexOf(data);
+function checkForUndefId(enemy, i) {
+  if(enemy.id == undefined) {
     player.enemies.splice(i, 1);
   }
 }
 
+function checkForEnemyRedundancy(data) {
+  if(contains(player.enemies, data) == false
+    && contains(player.fallenEnemies, data) == false) {
+
+    player.enemies.push(data);
+
+  } else {
+
+    var i = player.enemies.indexOf(data);
+    player.enemies.splice(i, 1);
+
+  }
+}
 // =======================================
 
 
@@ -81,7 +88,7 @@ function checkForEnemyRedundancy(data) {
 // Enemy Management
 // ==========================================
 
-function removeEnemy(enemy, data) {
+function removeEnemy(enemy, data, i) {
   if(enemy.id == data.id) {
     player.enemies.splice(i, 1);
     removeCustomMarker(enemy);
@@ -90,8 +97,10 @@ function removeEnemy(enemy, data) {
 
 function updateEnemyLocation(enemy, data) {
   if(enemy.id == data.id) {
+
     enemy.coordinates = data.coordinates;
     enemy.icon = data.icon;
+
     updateMarkerPosition(enemy);
   }
 }
@@ -99,7 +108,9 @@ function updateEnemyLocation(enemy, data) {
 function enemyManagement(enemyMngFunc, data) {
   for(i = 0; i < player.enemies.length; i++) {
     var enemy = player.enemies[i];
-    enemyMngFunc(enemy, data);
+
+    enemyMngFunc(enemy, data, i);
+
   }
 }
 // ============================================
@@ -111,8 +122,6 @@ function enemyManagement(enemyMngFunc, data) {
 
 function isPwned(data) {
   if(data.id == player.id) {
-    clearInterval(geolocQueryLoop);
-    removeCustomMarker(player);
     window.location.replace('/lost');
   } else {
     enemyManagement(removeEnemy, data);
@@ -120,15 +129,13 @@ function isPwned(data) {
   }
 }
 
-function youWin(data) {
-  if(player.tag == 'Pacman') {
-    if(player.fallenEnemies.length == 4) {
-      window.location.replace('/won');
-    }
-  } else {
-    if(data.icon == "/images/mini_Pacman.png") {
-      window.location.replace('/won');
-    }
+function youWin(enemyData) {
+  if(player.tag == 'Pacman'
+    && player.fallenEnemies.length == 4
+    || enemyData.icon == "/images/mini_Pacman.png") {
+
+    window.location.replace('/won');
+  
   }
 }
 // =======================================
@@ -141,6 +148,7 @@ function contains(array, obj) {
   while (i--) {
     if (array[i].id == obj.id) {
       return true;
+      break;
     }
   }
   return false;

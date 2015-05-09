@@ -14,6 +14,7 @@ function setPelletPosition(pellet, lat, lon) {
 function eatPelletChance(player) {
   for(i = 0; i < pellets.length; i++) {
   var pellet = pellets[i];
+
   var pelletDist = calculateDistance(pellet);
     if(pelletDist < 6) {
       var i = pellets.indexOf(pellet);
@@ -33,8 +34,10 @@ function eatPelletChance(player) {
 function eatEnemyChance(enemy) {
   var enemyDist = calculateDistance(enemy);
   if (enemyDist < 10 && enemy.status == 'weak') {
+    
     player.fallenEnemies.push(enemy);
     player.enemies.splice(i, 1);
+
     removeCustomMarker(enemy);
     broadcastPwnMsg(enemy);
   }
@@ -44,7 +47,7 @@ function mortalCountdownSwitch(player) {
   setTimeout(function() {
     changePlayerStatus(player);
     $('.invincible').hide();
- }, 60000);
+  }, 60000);
 }
 
 function changePlayerStatus(player) {
