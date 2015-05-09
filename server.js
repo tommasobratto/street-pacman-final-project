@@ -56,7 +56,7 @@ function start() {
 
     socket.on('pwned', function(playerData) {
       io.sockets.emit('player pwned', playerData);
-      console.log(data.id + ' pwned');
+      console.log(playerData.id + ' pwned');
     });
 
     socket.on('pacman eats pellet', function(playerData) {
