@@ -2,6 +2,8 @@ Pacman.js - client-side GPS-tracking game.
 ==========================================
 You can check out the live version on Heroku: http://street-pacman.herokuapp.com/
 
+The original repo can be found here: https://github.com/PacManProject/pacman-clientside
+
 Note: 
 -----
 Right now, this is the most up to date branch of all the project repos. I started it mainly to see if I could refactor a bit the codebase since we had a lot of code repetition, unused code snippets, console.logs for dev. use, etc...
