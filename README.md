@@ -31,18 +31,19 @@ To try out the player geolocation feature on a GPS-enabled phone:
 Or, if you have Ruby installed:
  - after point 3/4, you can run ```gem install proxylocal``` to use a similar service to ngrok
  - type ```proxylocal``` plus the port your http-server points to (it should be 3000 by default)
- - open up the url proxylocal gives you, as always checking that your GPS tracking is activated
+ - in your phone, open up the url proxylocal gives you, as always checking that your GPS tracking is activated
 
 
 Built with:
 - Google Maps API and GMaps.js
 - Javascript
 - JQuery
-- Html
-- Css
-- Socket io
-- Express js
-- Node
+- HTML
+- CSS
+- Socket.io
+- Express
+- Node.js
+- Skeleton
 
 
 Concept:
