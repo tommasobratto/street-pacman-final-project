@@ -1,12 +1,14 @@
 Pacman.js - client-side GPS-tracking game.
 ==========================================
 You can check out the live version on Heroku: http://street-pacman.herokuapp.com/
+The original repo can be found here: https://github.com/PacManProject/pacman-clientside
+
 
 Note: 
------
-Right now, this is the most up to date branch of all the project repos. I started it mainly to see if I could refactor a bit the codebase since we had a lot of code repetition, unused code snippets, console.logs for dev. use, etc...
+----- 
+EDIT: This new branch is dedicated to rewriting most of the game and socket logic using TDD, with Mocha and Chai.
 
-I still need to add some much needed testing, since we had such a short time to finish the project so we had to spike a lot of stuff we didn't knew at first. 
+Right now, this is the most up to date branch of all the project repos. I started it mainly to see if I could refactor a bit the codebase since we had a lot of code repetition, unused code snippets, console.logs for dev. use, etc...
 
 I feel like the highlights of this project were the Socket.io implementation, done in around two days with no previous knowledge, which allowed real-time update of enemy location and game status (also read: Multiplayer!) and it practically worked as a base on which to build all the other features upon, like the addition of player interaction features like "eating" pellets and enemies and the differentiation between player "pacman" and player "ghost" interactions within the game, or the game status changing once the "pacman" player ate the pellet. 
 
