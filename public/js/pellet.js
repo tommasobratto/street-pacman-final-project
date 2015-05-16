@@ -5,9 +5,11 @@ var Pellet = function() {
   };
   this.id;
   this.icon = '../images/pellets_small.png';
-};
+}
 
 Pellet.prototype.setPosition = function(lat, lon) {
   this.coordinates.latitude = lat;
   this.coordinates.longitude = lon;
-};
+}
+
+module.exports = Pellet;
