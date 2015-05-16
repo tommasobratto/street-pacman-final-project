@@ -85,63 +85,6 @@ function checkForEnemyRedundancy(data) {
 
 
 
-// Enemy Management
-// ==========================================
-
-function removeEnemy(enemy, data, i) {
-  if(enemy.id == data.id) {
-    player.enemies.splice(i, 1);
-    removeCustomMarker(enemy);
-  }
-}
-
-function updateEnemyLocation(enemy, data) {
-  if(enemy.id == data.id) {
-
-    enemy.coordinates = data.coordinates;
-    enemy.icon = data.icon;
-
-    updateMarkerPosition(enemy);
-  }
-}
-
-function enemyManagement(enemyMngFunc, data) {
-  for(i = 0; i < player.enemies.length; i++) {
-    var enemy = player.enemies[i];
-
-    enemyMngFunc(enemy, data, i);
-
-  }
-}
-// ============================================
-
-
-
-// player UI functions
-// =====================================
-
-function isPwned(data) {
-  if(data.id == player.id) {
-    window.location.replace('/lost');
-  } else {
-    enemyManagement(removeEnemy, data);
-    youWin(data);
-  }
-}
-
-function youWin(enemyData) {
-  if(player.tag == 'Pacman'
-    && player.fallenEnemies.length == 4
-    || enemyData.icon == "/images/mini_Pacman.png") {
-
-    window.location.replace('/won');
-  
-  }
-}
-// =======================================
-
-
-
 function contains(array, obj) {
   // thank you, random SO guy
   var i = array.length;

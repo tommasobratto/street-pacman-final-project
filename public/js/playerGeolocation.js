@@ -12,31 +12,32 @@ function queryGPStracker() {
 
 function updatePlayerLocation(position) {
   // Main player game loop
-  setPlayerCoords(position);
-  updateMarkerPosition(player);
-  // The function below works to remove some occasional marker duplicates left by a bug,
-  // as a substitute for the previous, redundant checkForMarkerDuplicate()
-  removeCustomMarker();
+  coords.latitude = position.coords.latitude;
+  coords.longitude = position.coords.longitude;
 
-  // These conditional statements call
-  // their respective game logic functions
-  if(player.tag == 'Pacman') {
-    eatPelletChance(player);
+  if(player.coordinates != coords) {
+    setPlayerCoords(coords);
+    updateMarkerPosition(player);
+
+    // These conditional statements call
+    // their respective game logic functions
+    if(player.tag == 'Pacman') {
+      eatPelletChance(player);
+    }
+
+    if(player.status == 'invincible') {
+      enemyManagement(eatEnemyChance);
+    }
+
+    broadcastPlayerMovement(player);
+    map.setCenter(coords.latitude, coords.longitude);
   }
-
-  if(player.status == 'invincible') {
-    enemyManagement(eatEnemyChance);
-  }
-
-  broadcastPlayerMovement(player);
-  map.setCenter(coords.latitude, coords.longitude);
 }
 
 function errorCallback() {
   console.log("the geolocation function didn't load properly");
 }
 
-function setPlayerCoords(position) {
-  coords = position.coords;
+function setPlayerCoords(coords) {
   player.getLocation(coords);
 }

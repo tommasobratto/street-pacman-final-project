@@ -1,7 +1,8 @@
-function calculateDistance(obj) {
-  var from = new google.maps.LatLng(player.coordinates.latitude, player.coordinates.longitude);
-  var to = new google.maps.LatLng(obj.coordinates.latitude, obj.coordinates.longitude);
-  return google.maps.geometry.spherical.computeDistanceBetween(from, to).toFixed(2);
+function calculateDistance(player, obj) {
+  var playerDist = new google.maps.LatLng(player.coordinates.latitude, player.coordinates.longitude);
+  var objDist = new google.maps.LatLng(obj.coordinates.latitude, obj.coordinates.longitude);
+
+  return google.maps.geometry.spherical.computeDistanceBetween(playerDist, objDist);
 }
 
 function setPelletPosition(pellet, lat, lon) {
@@ -15,8 +16,7 @@ function eatPelletChance(player) {
   for(i = 0; i < pellets.length; i++) {
   var pellet = pellets[i];
 
-  var pelletDist = calculateDistance(pellet);
-    if(pelletDist < 6) {
+    if(calculateDistance(player, pellet) < 6) {
       var i = pellets.indexOf(pellet);
       pellets.splice(i, 1);
 
@@ -32,8 +32,7 @@ function eatPelletChance(player) {
 }
 
 function eatEnemyChance(enemy) {
-  var enemyDist = calculateDistance(enemy);
-  if (enemyDist < 10 && enemy.status == 'weak') {
+  if (calculateDistance(player, enemy) < 10 && enemy.status == 'weak') {
     
     player.fallenEnemies.push(enemy);
     player.enemies.splice(i, 1);
@@ -57,3 +56,59 @@ function changePlayerStatus(player) {
     player.status = 'weak';
   }
 }
+
+// Enemy management functions
+// =====================================
+
+function removeEnemy(enemy, data, i) {
+  if(enemy.id == data.id) {
+    player.enemies.splice(i, 1);
+    removeCustomMarker(enemy);
+  }
+}
+
+function updateEnemyLocation(enemy, data) {
+  if(enemy.id == data.id) {
+
+    enemy.coordinates = data.coordinates;
+    enemy.icon = data.icon;
+
+    updateMarkerPosition(enemy);
+  }
+}
+
+function enemyManagement(enemyMngFunc, data) {
+  for(i = 0; i < player.enemies.length; i++) {
+    var enemy = player.enemies[i];
+
+    enemyMngFunc(enemy, data, i);
+
+  }
+}
+
+// =====================================
+
+
+
+// player UI functions
+// =====================================
+
+function isPwned(data) {
+  if(data.id == player.id) {
+    window.location.replace('/lost');
+  } else {
+    enemyManagement(removeEnemy, data);
+    youWin(data);
+  }
+}
+
+function youWin(enemyData) {
+  if(player.tag == 'Pacman'
+    && player.fallenEnemies.length == 4
+    || enemyData.icon == "/images/mini_Pacman.png") {
+
+    window.location.replace('/won');
+  
+  }
+}
+// =======================================

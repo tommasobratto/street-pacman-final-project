@@ -33,17 +33,21 @@ describe('Player', function() {
     assert.deepEqual([], player.fallenEnemies);
   });
 
+  describe('Player location', function() {
 
-  it('should be able to get a location', function() {
-    coordinates = {
-      latitude: 51.5,
-      longitude: 3.5
-    };
+    before(function() {
+      coordinates = {
+        latitude: 51.5,
+        longitude: 3.5
+      };
 
-    player.getLocation(coordinates);
+      player.getLocation(coordinates);
+    });
 
-    assert.equal(51.5, player.coordinates.latitude);
-    assert.equal(3.5, player.coordinates.longitude);
+    it('should be able to get a location', function() {
+      assert.equal(51.5, player.coordinates.latitude);
+      assert.equal(3.5, player.coordinates.longitude);
+    });
   });
 
   describe('Player selects Pacman', function() {
