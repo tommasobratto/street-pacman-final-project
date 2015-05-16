@@ -61,4 +61,12 @@ Player.prototype.initStatus = function(icon) {
   }
 }
 
+Player.prototype.changeStatus = function() {
+  if(this.status == 'weak') {
+    this.status = 'invincible';
+  } else {
+    this.status = 'weak';
+  }
+}
+
 module.exports = Player;

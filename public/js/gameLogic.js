@@ -21,7 +21,7 @@ function eatPelletChance(player) {
       pellets.splice(i, 1);
 
       if(player.status == 'weak') {
-        changePlayerStatus(player);
+        player.changeStatus();
       }
 
       removeCustomMarker(pellet);
@@ -44,17 +44,9 @@ function eatEnemyChance(enemy) {
 
 function mortalCountdownSwitch(player) {
   setTimeout(function() {
-    changePlayerStatus(player);
+    player.changeStatus();
     $('.invincible').hide();
   }, 60000);
-}
-
-function changePlayerStatus(player) {
-  if(player.status == 'weak') {
-    player.status = 'invincible';
-  } else {
-    player.status = 'weak';
-  }
 }
 
 // Enemy management functions

@@ -56,7 +56,7 @@ function listenForPwning() {
 
 function listenForInvinciblePacman() {
   socket.on('pacman is invincible', function(data) {
-    changePlayerStatus(player);
+    player.changeStatus();
   });
 }
 

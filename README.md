@@ -7,7 +7,7 @@ The original repo can be found here: https://github.com/PacManProject/pacman-cli
 
 Note: 
 ----- 
-EDIT: This new branch is dedicated to rewriting most of the game and socket logic using TDD, with Mocha and Chai.
+EDIT: This new branch is dedicated to rewriting most of the game and socket logic using TDD and Unit testing with Mocha and Chai.
 
 Right now, this is the most up to date branch of all the project repos. I started it mainly to see if I could refactor a bit the codebase since we had a lot of code repetition, unused code snippets, console.logs for dev. use, etc...
 
