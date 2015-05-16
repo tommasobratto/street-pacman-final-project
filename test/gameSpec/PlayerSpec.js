@@ -69,6 +69,11 @@ describe('Player', function() {
     it('should be able to get a "weak" status', function() {
       assert.equal('weak', player.status);
     });
+
+    it('should be able to change status to "invincible"', function() {
+      player.changeStatus();
+      assert.equal('invincible', player.status)
+    });
   });
 
   describe('Player selects Ghost', function() {
@@ -91,5 +96,9 @@ describe('Player', function() {
       assert.equal('invincible', player.status);
     });
 
+    it('should be able to change status to "weak"', function() {
+      player.changeStatus();
+      assert.equal('weak', player.status)
+    });
   });
 });
