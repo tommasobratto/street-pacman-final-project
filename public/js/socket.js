@@ -143,7 +143,7 @@ function youWin(enemyData) {
 
 
 function contains(array, obj) {
-  // thank you, random SO guy
+  // thank you, random StackOverflow guy
   var i = array.length;
   while (i--) {
     if (array[i].id == obj.id) {
